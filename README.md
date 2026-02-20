@@ -1,2 +1,3 @@
-# po_2026
-Repozytorium kodów z laboratorium Programowanie Obiektowe dla AiR 2025/26
+# Programowanie Opiektowe dla AiR - Lab - 2025/26
+
+Źródła programów z zajęć 
