@@ -35,7 +35,7 @@ Wielomian& Wielomian::operator=(const Wielomian& w)
 	if (st != w.st)
 	{
 		delete[] wsp;
-		wsp = new double[w.st];
+		wsp = new double[w.st + 1];
 		st = w.st;
 	}
 	for (int i = 0; i < w.st+1; i++) wsp[i] = w.wsp[i];
