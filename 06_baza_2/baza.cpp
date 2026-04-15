@@ -38,11 +38,11 @@ void Baza::Zapisz(const char* nazwa) const
 	{
 		plik << *this;
 		plik.close();
-		cout << "Baza danaych zapisana w " << nazwa << endl;
+		cout << "Baza danych zapisana w " << nazwa << endl;
 	}
 	else
 	{
-		cerr << "Blad odczytu pliku: " << nazwa << endl;
+		cerr << "Blad otwarcia pliku: " << nazwa << endl;
 	}
 }
 

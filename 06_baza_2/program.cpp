@@ -7,59 +7,47 @@ using namespace std;
 
 int main()
 {
-	Data d1;
-	Data d2(30, 3, 2026);
+	// Test klasy Data
+	Data data1;
+	Data data2(30, 3, 2026);
 
-	cout << "Data domyslna " << d1 << endl;
-	cout << "Data dzisieksza " << d2 << endl;
+	cout << "Data domyslna " << data1 << endl;
+	cout << "Data dzisiejsza " << data2 << endl;
 
-	Osoba o1;
-	Osoba o2("Marek", "Grochowski", Data(1, 1, 1999), Plec::Mezczyzna);
+	// Test klasy Osoba
+	Osoba osoba1;
+	Osoba osoba2("Marek", "Grochowski", Data(1, 1, 1999), Plec::Mezczyzna);
 
-	cout << "Osoba domyslna " << o1 << endl;
-	cout << "Osoba 2  " << o2 << endl;
+	cout << "Osoba 1 (domyslna) " << osoba1 << endl;
+	cout << "Osoba 2  " << osoba2 << endl;
 
+	// Test wczytywania osoby z klawiatury
+	Osoba osoba3 = Osoba::WczytajOsobe();
+	cout << "Wczytana osoba 3: " << osoba3 << endl;
 
-	// Osoba osoba3 = Osoba::WczytajOsobe();
+	// Test operatora < dla sortowania
+	bool wynik = osoba2 < osoba3;
+	cout << "Czy osoba 2 < osoba 3 ? " << wynik << endl;
+
+	cout << "Czy osoba 3 < osoba 2 ? " << (osoba3 < osoba2) << endl;
 	
-	// bool wynik = osoba3 < o2;
-	// cout << "Wynik " << wynik << endl;
 	Baza baza;
+	baza.Dodaj(osoba2);
+	baza.Dodaj(osoba3);
+	
+
+	Osoba osoba4("Julia", "Zielinska", Data(13, 11, 1999), Plec::Kobieta);
+	baza.Dodaj(osoba4);
+
+	baza.Dodaj(Osoba("Adam", "Nowak", Data(1, 1, 1999), Plec::Mezczyzna));
+	baza.Dodaj(Osoba("Marek", "Arciszewski", Data(1, 1, 1999), Plec::Mezczyzna));
 	cout << baza;
 
-	baza.Dodaj(o2);
-
-	Osoba o3("Julia", "Zzzzzz", Data(1, 1, 1999), Plec::Kobieta);
-	baza.Dodaj(o3);
-
-	Osoba o4("Adam", "Nowak", Data(1, 1, 1999), Plec::Mezczyzna);
-	baza.Dodaj(o4);
-	Osoba o5("Marek", "Arciszewski", Data(1, 1, 1999), Plec::Mezczyzna);
-	baza.Dodaj(o5);
-
-	cout << baza;
-
-	cout << "Po posortowaniu" << endl;
+	cout << "\nPo posortowaniu" << endl << endl;
 
 	baza.Sortuj();
 	cout << baza;
 
+	// Zapis bazy danych do pliku
 	baza.Zapisz("baza.txt");
-
-
-
-	/*
-	for (int i = 0; i < 101; i++)
-	{
-		baza.Dodaj(osoba3);
-	}
-	cout << baza;
-
-	*/
-
-
-
-
 }
-
-
