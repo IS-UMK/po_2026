@@ -1,68 +1,62 @@
-#include "wielomian.h"
-#include "parabola.h"
-#include <iomanip>
-#include <iostream>
-#include "gauss.h"
 #include "funkcja.h"
+#include "parabola.h"
+#include "gauss.h"
+#include "wielomian.h"
 
+#include <iostream>
 using namespace std;
 
+/* Obliczanie calki funkcji f na przedziale [a, b] metoda prostokatow 
+   Argumenty:
+   f - wskaznik na funkcje, ktorej calke chcemy obliczyc
+   a - poczatek przedzialu calkowania
+   b - koniec przedzialu calkowania
+   n - liczba wezlow calkowania (im wiecej, tym dokladniejsza calka, ale tez dluzej sie liczy)
+   Zwraca:
+   Wartosc calki funkcji f na przedziale [a, b]
+*/
 
-double calka(Funkcja* f, double a, double b, int n)
+double calka(Funkcja* f, double a, double b, int n=100)
 {
 	double h = (b - a) / n;
 	double wynik = 0.0;
-	for (double x = a; x <= b; x += h)
+	
+	for (int i = 0; i <= n; ++i)
 	{
-		wynik += f->ObliczWartosc(x);
+		wynik += f->ObliczWartosc(a + i * h);
 	}
 	return wynik * h;
 }
 
 
-
 int main()
 {
+	int n;
 
-	Gauss g1;
+	cout << "Ile wezlow calkowania? " ;
+	cin >> n;
 
-	cout << "g1 " << g1 << endl;
-
-	double x = 1;
-	cout << "g1(x) = " << g1.ObliczWartosc(x) << endl;
-
-
-	Gauss g2(1, 2);
-
-	cout << "g2 " << g2 << endl;
-	cout << "g2(x) = " << g2.ObliczWartosc(x) << endl;
-	for (x = -10; x < +10; x++)
-	{
-		cout << x << " : " << g2.ObliczWartosc(x) << endl;
-	}
-
-	Funkcja *jakas_funkcja;
-
-	jakas_funkcja = &g2;
-
-	cout << "wartosc funkcji " << jakas_funkcja->ObliczWartosc(1) << endl;
-
-	double wsp[] = { 1, 1, 1 };
-	Wielomian w1(2,wsp );
-
-	jakas_funkcja = &w1;
-	cout << "wartosc funkcji " << jakas_funkcja->ObliczWartosc(1) << endl;
-
-	double sr = 3;
-	double odch = 5;
-	Gauss g3(sr, odch);
-
-	double wynik = calka(&g3, sr, sr + 3 * odch, 1000);
-
-	cout << "Calka " << g3 << " wynosi " << wynik << endl;
-
-	Parabola p(1, 0, 0);
-	wynik = calka(&p, 0, 1, 1000);
-	cout << "Calka " << p << " na[0, 1] wynosi " << wynik << endl;
+	// calkowanie funkcji gaussa na przedziale [srednia, 3*odchylenie]
+	double srednia = 3, odchylenie = 5;
+	Gauss g(srednia, odchylenie);
 	
+	double a = srednia, b = 3.0 * odchylenie;
+
+	double wynik = calka(&g, a, b, n);
+
+	cout << "Funkcja: " << g << endl;
+	cout << "Przedzial calkowania: [" << a << ", " << b << "]" << endl; 
+	cout << "Wynik calkowania = " << wynik << endl << endl;
+
+	// calkowanie funkcji paraboli na przedziale [0, 1]
+	Parabola p(1, 0, 0);
+	
+	a = 0.0, b = 1.0;
+	wynik = calka(&p, a, b, n);
+	
+	cout << "Funkcja: " << p << endl;
+	cout << "Przedzial calkowania: [" << a << ", " << b << "]" << endl; 
+	cout << "Wynik calkowania = " << wynik << endl;
+	
+	return 0;
 }
