@@ -1,6 +1,6 @@
 #include "wektor.h"
 #include <iostream>
-#include<string>
+#include <string>
 #include <fstream>
 
 using namespace std;
@@ -8,25 +8,27 @@ using namespace std;
 int main()
 {
 	Wektor<int> wektor1;
-	cout << "Rozmiar w1 = " << wektor1.Rozmiar() << endl;
+	cout << "Pusty wektor<int> ma rozmiar " << wektor1.Rozmiar() << endl;
+	cout << wektor1 << endl << endl;
 
+	// dodajemy 100 elementow
 	for (int i = 0; i < 100; i++)
 	{
 		wektor1.Dodaj(i);
 	}
-	cout << wektor1 << endl;;
 
+	cout << "Po dodaniu 100 elementow:" << endl;
+	cout << wektor1 << endl;
+
+	// modyfikujemy 5 element
 	wektor1[5] = 42;
 
-	cout << wektor1 << endl;;
-
-
-
-
-
+	cout << "Po modyfikacji 5 elementu:" << endl;
+	cout << wektor1 << endl;
 
 	Wektor<float> wektor2(100);
-	cout << "Rozmiar w2 = " << wektor2.Rozmiar() << endl;
+	cout << "wektor<float> wektor2 ma rozmiar " << wektor2.Rozmiar() << endl;
+	cout << wektor2 << endl << endl;
 
 	Wektor<string> wektor3;
 
@@ -49,7 +51,8 @@ int main()
 		return 1;
 	}
 
-	for (int i = wektor3.IleElementow(); i >=0 ; i--)
+	cout << "Zawartosc pliku z odwróconą kolejnością linii:" << endl;
+	for (int i = wektor3.IleElementow() - 1; i >= 0; i--)
 	{
 		cout << i << " : " << wektor3[i] << endl;
 	}

@@ -4,14 +4,14 @@
 #include<iostream>
 using namespace std;
 
-
+// deklaracja wyprzedzajaca na potrzeby szablonu zaprzyjaznionego operatora <<
 template <typename T>
 class Wektor;
 
 template <typename T>
 ostream& operator<< (ostream& o, const Wektor<T>& w);
 
-const int rozmiar_wektora = 10;
+const int domyslny_rozmiar = 10;
 
 template <typename T>
 class Wektor
@@ -23,7 +23,7 @@ private:
 
 public:
 
-	Wektor(int rozmiar = rozmiar_wektora) :elementy{ new T[rozmiar] },
+	Wektor(int rozmiar = domyslny_rozmiar) :elementy{ new T[rozmiar] },
 		rozmiar{ rozmiar }, liczba_elementow{ 0 } { }
 
 	int Rozmiar() const { return rozmiar;  }
@@ -36,13 +36,10 @@ public:
 
 	friend ostream& operator<< < >  (ostream& o, const Wektor<T>& w);
 
-	~Wektor() {
-		if (elementy != nullptr)
-		{
-			delete[] elementy;
-			elementy = nullptr;
-		}
-	}
+	~Wektor(); 
+
+	Wektor(const Wektor<T>& w);
+	Wektor<T>& operator=(const Wektor<T>& t);
 
 };
 
@@ -67,15 +64,11 @@ void Wektor<T>::Dodaj(const T& element)
 	liczba_elementow++;
 }
 
-
-
-
-
 template <typename T>
 ostream& operator<<(ostream& o, const Wektor<T>& w)
 {
 	o << "Rozmiar: " << w.Rozmiar() << endl;
-	o << "Ile elementow: " << w.IleElementow() << endl;
+	o << "Liczba elementow: " << w.IleElementow() << endl;
 	o << "Elementy: ";
 	for (int i = 0; i < w.IleElementow(); i++)
 	{
@@ -84,6 +77,43 @@ ostream& operator<<(ostream& o, const Wektor<T>& w)
 	return o;
 }
 
+template <typename T>
+Wektor<T>::~Wektor()
+{
+	if (elementy != nullptr)
+	{
+		delete [] elementy;
+		elementy = nullptr;
+	}
+	liczba_elementow = 0;
+	rozmiar = 0;
+}
+
+template <typename T>
+Wektor<T>::Wektor(const Wektor<T>& w):Wektor(w.rozmiar)
+{
+	liczba_elementow = w.liczba_elementow;
+	for (int i = 0; i < liczba_elementow; i++)
+	{
+		elementy[i] = w.elementy[i];
+	}
+}
+
+template <typename T>
+Wektor<T>& Wektor<T>::operator=(const Wektor<T>& w)
+{
+	if (rozmiar < w.liczba_elementow)
+	{
+		rozmiar = w.rozmiar;
+		delete[] elementy;
+		elementy = new T[rozmiar];
+	}
+	liczba_elementow = w.liczba_elementow;
+	for (int i = 0; i < w.liczba_elementow; i++)
+		elementy[i] = w.elementy[i];
+	
+	return  *this;
+}
 
 #endif
 
